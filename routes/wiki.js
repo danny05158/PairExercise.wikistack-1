@@ -2,7 +2,7 @@ const express = require('express');
 const router = express.Router();
 //const addPage = require('../views/addPage');
 
-const { Page } = require('../models');
+const { Page, User } = require('../models');
 const { addPage } = require('../views');
 const wikipage = require('../views/wikipage');
 const mainPage = require('../views/main');
@@ -39,6 +39,14 @@ router.post('/', async (req, res, next) => {
     //status: req.body.status === undefined ? "open" : "closed"
   });
 
+  const author = await User.findOrCreate({
+    where: {
+      name: req.body.author,
+      email: req.body.email,
+    }
+  });
+  page.setAuthor(author[0])
+  
   try {
     await page.save();
     res.redirect(`/wiki/${page.slug}`);
