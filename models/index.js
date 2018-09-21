@@ -21,7 +21,9 @@ const Page = db.define('page', {
   },
 });
 
-Page.beforeCreate((pageInstance, optionsObject) => {
+Page.beforeValidate((pageInstance, optionsObject) => {
+  console.log('debug');
+
   pageInstance.slug = generateSlug(pageInstance.title);
 });
 
@@ -46,6 +48,7 @@ db.authenticate().then(() => {
 function generateSlug(title) {
   // Removes all non-alphanumeric characters from title
   // And make whitespace underscore
+  console.log('debug');
   return title.replace(/\s+/g, '_').replace(/\W/g, '');
 }
 
