@@ -15,20 +15,17 @@ app.use('/wiki', wikiRouter);
 app.use('/user', userRouter);
 
 const init = async () => {
-  await models.User.sync()
-  await models.Page.sync()
+  await models.User.sync();
+  await models.Page.sync();
 
   const PORT = 3000;
   app.listen(PORT, () => {
     console.log(`App listening in port ${PORT}`);
   });
+};
 
-}
-
-app.get('/wiki', (req, res) => {
-  // res.send(layout(''));
-
+app.get('/', (req, res) => {
+  res.redirect('/wiki');
 });
 
-init()
-
+init();
